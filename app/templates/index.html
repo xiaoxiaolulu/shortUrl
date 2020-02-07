@@ -1,0 +1,47 @@
+{%extends 'layout.html'%}
+{% block content%}
+<form action="" id="form-data">
+    <div class="form-group">
+        <label for="input_url">原始网址</label>
+        {% raw xsrf_form_html()%}
+        <input type="url" class="form-control" id="input_url" name="url" placeholder="请输入要缩短的长链接">
+    </div>
+    <div id="error_url"></div>
+    <button id="btn-sub" type="button" class="btn btn-primary">获取短链接</button>
+</form>
+{%end%}}
+
+{%block foot%}
+<script>
+    $(document).ready(function () {
+        $("#btn-sub").click(function () {
+            const data = $('#form-data').serialize();
+            console.log(data);
+            $.ajax({
+                url: '/',
+                type: 'post',
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);
+                    if (res.code == 1){
+                        location.href="/result?uuid="+res.uuid;
+                    } else {
+                        const fields = ["url"];
+                        for(const k in fields){
+                            if (typeof res[fields[k]] == 'undefined'){
+                                $("#error_" + fields[k]).empty();
+                            } else {
+                                $("#error_" + fields[k]).empty();
+                                $("#error_" + fields[k]).append(
+                                    "<span class='text-danger'>"+ res[fields[k]]+"</span>"
+                                );
+                            }
+                        }
+                    }
+                }
+            })
+        })
+    })
+</script>
+{%end%}

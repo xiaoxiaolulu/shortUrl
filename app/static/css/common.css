@@ -1,0 +1,8 @@
+.m-top{
+  margin-top: 12px;
+}
+
+.table td, table th {
+  font-size: 12px;
+  vertical-align: middle;
+}

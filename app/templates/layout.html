@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>短链接服务</title>
+    <link rel="stylesheet" href="{{static_url('dist/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{static_url('css/common.css')}}">
+</head>
+<body>
+    <div class="container">
+        <div class="row m-top">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        {{data['title']}}
+                    </div>
+                    <div class="card-body">
+                        {%block content%} {%end%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+{%block foot%} {%end%}
+</body>
+</html>

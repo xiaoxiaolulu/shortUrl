@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>短链接服务</title>
+    <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/common.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row m-top">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    短链接统计
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">原始网址</span>
+                        </div>
+                        <input class="form-control" name="url" type="url" value="https://www.baidu.com">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">缩短网址</span>
+                        </div>
+                        <input class="form-control" name="url" type="url" value="https://www.baidu.com">
+                    </div>
+                    <hr />
+                    <p class="text-center">访问短链接二维码统计</p>
+                    <div class="text-center" id="qrcode"></div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="alert alert-warning" role="alert">
+                                当日访问量：100
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-info" role="alert">
+                                总计访问量：1000000
+                            </div>
+                        </div>
+                    </div>
+                                            <div class="table-responsive">
+                            <table class="table table-bordered table-sm">
+                                <tr>
+                                    <th>编号</th>
+                                    <th>访问url</th>
+                                    <th>访问ip</th>
+                                    <th>访问地址</th>
+                                    <th>请求方法</th>
+                                    <th>访问时间</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td class="text-success">2</td>
+                                    <td class="text-danger">1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <nav class="d-flex justify-content-center">
+                          <ul class="pagination">
+                              <li class="page-item"><a class="page-link" href="#">首页</a></li>
+                              <li class="page-item"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                              <li class="page-item"><a class="page-link" href="#">尾页</a></li>
+                          </ul>
+                        </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#qrcode").qrcode({
+            render: "canvas",
+            width: 200,
+            height: 200,
+            text: "pageview.html"
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{%extends 'layout.html'%}
+{% block content%}
+<input type="url" class="form-control" name="url" value="{{handler.site_url}}{{data['su'].code}}">
+<hr/>
+<p class="text-center">短链接二维码</p>
+<div id="qrcode" class="text-center"></div>
+<hr/>
+<div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-primary btn-block" href="/">继续生成</a>
+
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-success btn-block" href="/pageview?uuid={{data['su'].uuid}}">查看统计</a>
+    </div>
+</div>
+{%end%}
+
+{%block foot%}
+<script>
+    $(document).ready(function () {
+        $("#qrcode").qrcode({
+            render: "canvas",
+            width: 200,
+            height: 200,
+            text: "{{handler.site_url}}{{data['su'].code}}"
+        })
+    })
+</script>
+{%end%}
