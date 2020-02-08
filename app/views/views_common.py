@@ -7,6 +7,10 @@ import tornado.web
 class CommonHandler(tornado.web.RequestHandler, ABC):
 
     @property
+    def d(self, day=0):
+        return (datetime.datetime.now() + datetime.timedelta(days=day)).strftime('%Y-%m-%d')
+
+    @property
     def site_url(self):
         return 'http://localhost:8000/'
 

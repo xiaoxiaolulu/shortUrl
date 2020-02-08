@@ -1,0 +1,95 @@
+{%extends 'layout.html'%}
+{% block content%}
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">原始网址</span>
+    </div>
+    <input class="form-control" name="url" type="url" value="{{data['su'].url}}">
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">缩短网址</span>
+    </div>
+    <input class="form-control" name="url" type="url" value="{{handler.site_url}}{{data['su'].code}}">
+</div>
+<hr/>
+<p class="text-center">访问短链接二维码统计</p>
+<div class="text-center" id="qrcode"></div>
+<hr/>
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-warning" role="alert">
+            当日访问量：{{data['day']}}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="alert alert-info" role="alert">
+            总计访问量：{{data['all']}}
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-sm" id="pv_data">
+        {%raw xsrf_form_html()%}
+        <tr>
+            <th>编号</th>
+            <th>访问url</th>
+            <th>访问ip</th>
+            <th>访问地址</th>
+            <th>请求方法</th>
+            <th>访问时间</th>
+        </tr>
+    </table>
+    <a id="load-more" data-id="1" class="btn btn-light">点击加载数据</a>
+    <div id="error_msg"></div>
+</div>
+{%end%}}
+
+{%block foot%}
+<script>
+    $(document).ready(function () {
+        $("#qrcode").qrcode({
+            render: "canvas",
+            width: 200,
+            height: 200,
+            text: "{{handler.site_url}}{{data['su'].code}}"
+        });
+
+        function getCookie(name) {
+            var c = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+            return c ? c[1] : undefined;
+        }
+
+        function pv(page) {
+            $.ajax({
+                url: "/pageview",
+                data: {page: page, _xsrf: getCookie("_xsrf"), uuid: "{{data['su'].uuid}}"},
+                type: "post",
+                dataType: "json",
+                success: function (res) {
+                    if (res.code == 1) {
+                        var data = res.data;
+                        for (var k in data) {
+                            var html = "<tr><td>" + data[k]['id'] + "</td><td>" + data[k]['url'] + "</td><td class='text-success'>" + data[k]['ip'] + "</td><td class='text-danger'>" + data[k]['address'] + "</td><td>" + data[k]['method'] + "</td><td>" + data[k]['createdAt'] + "</td></tr>"
+                            $("#pv_data").append(html);
+                        }
+                    }else {
+                     $("#error_msg").empty();
+                     $("#error_msg").append(
+                         "<span class='text-danger'>"+ "没有更多数据" +"</span>"
+                     );
+                    }
+                }
+            })
+        }
+
+        pv(1);
+
+        $("#load-more").click(function () {
+            var page = parseInt($(this).attr('data-id')) + 1;
+            pv(page);
+            $(this).attr('data-id', page);
+        })
+    })
+</script>
+{%end%}

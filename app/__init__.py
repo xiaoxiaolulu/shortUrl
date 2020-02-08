@@ -30,7 +30,7 @@ class CustomApplication(tornado.web.Application):
             bind=engine,
             autocommit=False,
             autoflush=True,
-            expire_on_commit=False
+            expire_on_commit=False,
         )
         return session()
 

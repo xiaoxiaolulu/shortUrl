@@ -10,6 +10,7 @@ class ShortLinkHandler(CommonHandler, ABC):
         try:
             su = self.session.query(ShortUrl).filter_by(code=code).first()
             print(su.url)
+            self.save_pv(su.id)
         except Exception as msg:
             self.session.rollback()
             print(msg)
@@ -23,13 +24,14 @@ class ShortLinkHandler(CommonHandler, ABC):
         try:
             pv = PageView(
                 ip=self.request.remote_ip,
-                url=self.request.url,
+                url=self.request.uri,
                 shorturl_id=shortlink_id,
                 method=self.request.method,
-                address='',
+                address='本地地址',
                 createdAt=self.dt,
                 updatedAt=self.dt
             )
+            self.session.add(pv)
         except Exception as msg:
             self.session.rollback()
             print(msg)

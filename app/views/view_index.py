@@ -53,6 +53,7 @@ class IndexHandler(CommonHandler, ABC):
                     uuid_data = short_url.uuid
                 res['code'] = 1
                 res['uuid'] = uuid_data
+
             except Exception as msg:
                 self.session.rollback()
                 print(msg)
